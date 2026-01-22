@@ -1,0 +1,6 @@
+
+{
+  "name": "UniEnsalamento - Sistema de Gestão de Salas",
+  "description": "Uma plataforma robusta para gestão de ensalamento universitário com suporte a multi-campus, RBAC granular e algoritmos de detecção de conflitos.",
+  "requestFramePermissions": []
+}
