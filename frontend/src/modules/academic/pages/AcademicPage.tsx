@@ -135,6 +135,17 @@ const AcademicPage: React.FC = () => {
     setIsModalOpen(true);
   };
 
+  // Atalho de teclado para fechar modal com Esc
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && isModalOpen) {
+        setIsModalOpen(false);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isModalOpen]);
+
   const toggleCourseInSubject = (courseId: string) => {
     setSubjectForm(prev => {
       const isSelected = prev.courseIds.includes(courseId);
@@ -277,14 +288,14 @@ const AcademicPage: React.FC = () => {
                 <tr key={item.id} className="hover:bg-gray-50/50 transition-colors group">
                   {activeTab === 'classes' && (
                     <>
-                      <td className="px-6 py-4"><p className="font-bold text-gray-700">{item.code}</p><p className="text-[10px] text-gray-400 uppercase font-black">{item.course}</p></td>
-                      <td className="px-6 py-4 text-sm font-medium text-gray-800">{item.subject}</td>
-                      <td className="px-6 py-4 text-center"><span className="px-2 py-0.5 bg-indigo-50 text-indigo-700 rounded text-xs font-black">{item.students}</span></td>
+                      <td className="px-6 py-4 focus:bg-indigo-50 outline-none" tabIndex={0}><p className="font-bold text-gray-700">{item.code}</p><p className="text-[10px] text-gray-400 uppercase font-black">{item.course}</p></td>
+                      <td className="px-6 py-4 text-sm font-medium text-gray-800 focus:bg-indigo-50 outline-none" tabIndex={0}>{item.subject}</td>
+                      <td className="px-6 py-4 text-center focus:bg-indigo-50 outline-none" tabIndex={0}><span className="px-2 py-0.5 bg-indigo-50 text-indigo-700 rounded text-xs font-black">{item.students}</span></td>
                     </>
                   )}
                   {activeTab === 'subjects' && (
                     <>
-                      <td className="px-6 py-4">
+                      <td className="px-6 py-4 focus:bg-indigo-50 outline-none" tabIndex={0}>
                         <p className="font-bold text-gray-700">{item.code}</p>
                         <p className="text-[11px] text-indigo-600 font-medium mb-1">{item.name}</p>
                         <div className="flex flex-wrap gap-1">
@@ -298,8 +309,8 @@ const AcademicPage: React.FC = () => {
                           })}
                         </div>
                       </td>
-                      <td className="px-6 py-4"><span className="px-2 py-1 bg-amber-50 text-amber-700 rounded text-[10px] font-black uppercase flex items-center w-fit"><Calendar size={12} className="mr-1" />{item.offeredMonth}</span></td>
-                      <td className="px-6 py-4">
+                      <td className="px-6 py-4 focus:bg-indigo-50 outline-none" tabIndex={0}><span className="px-2 py-1 bg-amber-50 text-amber-700 rounded text-[10px] font-black uppercase flex items-center w-fit"><Calendar size={12} className="mr-1" />{item.offeredMonth}</span></td>
+                      <td className="px-6 py-4 focus:bg-indigo-50 outline-none" tabIndex={0}>
                         <div className="flex flex-col">
                           <span className="text-sm font-bold text-gray-600">{item.workload}h</span>
                           <span className="text-[9px] font-black uppercase text-gray-400">{item.requiredRoomType}</span>
@@ -309,9 +320,9 @@ const AcademicPage: React.FC = () => {
                   )}
                   {activeTab === 'courses' && (
                     <>
-                      <td className="px-6 py-4 font-bold text-gray-700">{item.name}</td>
-                      <td className="px-6 py-4 text-sm font-mono text-gray-500">{item.code}</td>
-                      <td className="px-6 py-4">
+                      <td className="px-6 py-4 font-bold text-gray-700 focus:bg-indigo-50 outline-none" tabIndex={0}>{item.name}</td>
+                      <td className="px-6 py-4 text-sm font-mono text-gray-500 focus:bg-indigo-50 outline-none" tabIndex={0}>{item.code}</td>
+                      <td className="px-6 py-4 focus:bg-indigo-50 outline-none" tabIndex={0}>
                         <span className="px-2.5 py-1 bg-emerald-50 text-emerald-600 rounded-full text-[10px] font-black uppercase flex items-center w-fit">
                           <CheckCircle2 size={12} className="mr-1.5" />
                           {item.status || 'Ativo'}

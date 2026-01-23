@@ -179,6 +179,17 @@ const EnsalamentoPage: React.FC = () => {
     setIsModalOpen(true);
   };
 
+  // Atalho de teclado para fechar modal com Esc
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && isModalOpen) {
+        setIsModalOpen(false);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isModalOpen]);
+
   const handleRemoveProposal = async (id: string) => {
     if (window.confirm("Deseja remover esta proposta de alocação?")) {
       try {
@@ -276,7 +287,14 @@ const EnsalamentoPage: React.FC = () => {
 
         <div className="divide-y divide-gray-50">
           {proposals.length > 0 ? proposals.map((item) => (
-            <div key={item.id} className="flex flex-col sm:flex-row sm:items-center p-5 hover:bg-gray-50/50 transition-all group gap-4">
+            <div
+              key={item.id}
+              tabIndex={0}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') handleOpenModal('view', item);
+              }}
+              className="flex flex-col sm:flex-row sm:items-center p-5 hover:bg-gray-50/50 outline-none focus:bg-indigo-50 transition-all group gap-4"
+            >
               <div className={`w-12 h-12 rounded-xl flex items-center justify-center shrink-0 ${item.conflict === ConflictLevel.CRITICAL ? 'bg-red-100 text-red-600' :
                 item.conflict === ConflictLevel.MEDIUM ? 'bg-amber-100 text-amber-600' : 'bg-emerald-100 text-emerald-600'
                 }`}>

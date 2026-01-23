@@ -91,6 +91,17 @@ const RoomsPage: React.FC = () => {
     setIsModalOpen(true);
   };
 
+  // Atalho de teclado para fechar modal com Esc
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && isModalOpen) {
+        setIsModalOpen(false);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isModalOpen]);
+
   const handleDelete = async (id: string) => {
     if (window.confirm("Tem certeza que deseja remover esta sala? Esta ação é auditável e não pode ser desfeita.")) {
       try {
@@ -190,19 +201,19 @@ const RoomsPage: React.FC = () => {
             <tbody className="divide-y divide-gray-100">
               {filteredRooms.map((room) => (
                 <tr key={room.id} className="hover:bg-gray-50/50 transition-colors group">
-                  <td className="px-6 py-4 font-bold text-gray-700">{room.number}</td>
-                  <td className="px-6 py-4 text-sm text-gray-500">
+                  <td className="px-6 py-4 font-bold text-gray-700 focus:bg-indigo-50 outline-none" tabIndex={0}>{room.number}</td>
+                  <td className="px-6 py-4 text-sm text-gray-500 focus:bg-indigo-50 outline-none" tabIndex={0}>
                     <div className="font-medium text-gray-700">{room.building}</div>
                     <div className="text-[10px] text-gray-400 uppercase tracking-tight">
                       {room.campus} • Bloco {room.block} • {room.floor}º Andar
                     </div>
                   </td>
-                  <td className="px-6 py-4 text-center text-sm font-bold">{room.capacity}</td>
-                  <td className="px-6 py-4 text-center text-sm font-bold text-indigo-600">
+                  <td className="px-6 py-4 text-center text-sm font-bold focus:bg-indigo-50 outline-none" tabIndex={0}>{room.capacity}</td>
+                  <td className="px-6 py-4 text-center text-sm font-bold text-indigo-600 focus:bg-indigo-50 outline-none" tabIndex={0}>
                     {occupancyMap[room.id] || 0}
                   </td>
-                  <td className="px-6 py-4 text-xs font-black uppercase text-indigo-600">{room.type}</td>
-                  <td className="px-6 py-4 text-center">
+                  <td className="px-6 py-4 text-xs font-black uppercase text-indigo-600 focus:bg-indigo-50 outline-none" tabIndex={0}>{room.type}</td>
+                  <td className="px-6 py-4 text-center focus:bg-indigo-50 outline-none" tabIndex={0}>
                     <span className={`px-2 py-1 rounded-full text-[10px] font-black uppercase ${room.isActive ? 'bg-emerald-50 text-emerald-600' : 'bg-gray-100 text-gray-400'}`}>
                       {room.isActive ? 'Ativa' : 'Inativa'}
                     </span>
